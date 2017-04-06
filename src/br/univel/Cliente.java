@@ -29,7 +29,4 @@ public class Cliente {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	
-	
-
 }
