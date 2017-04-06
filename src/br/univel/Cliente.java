@@ -2,8 +2,13 @@ package br.univel;
 
 @Tabela
 public class Cliente {
+	@Coluna(pk=true)	
 	private int id;
+
+	@Coluna
 	private String nome;
+	
+	@Coluna
 	private String endereco;
 	
 	public int getId() {
@@ -11,7 +16,7 @@ public class Cliente {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
+	}	
 	public String getNome() {
 		return nome;
 	}

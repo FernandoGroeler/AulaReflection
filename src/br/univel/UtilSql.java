@@ -8,10 +8,15 @@ public class UtilSql {
 			throw new RuntimeException("Classe não anotada.");
 		}
 		
+		if (o.getClass().isAnnotationPresent(Tabela.class)) {
+			Tabela tab = o.getClass().getAnnotation(Tabela.class);
+			System.out.println(tab.value());
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("INSERT INTO ");
-		sb.append(getNomeTabela(o));
+		sb.append(getNomeTabela2(o));
 		sb.append(" (");
 		sb.append(getAtributos(o));
 		sb.append(") VALUES (");
@@ -20,10 +25,33 @@ public class UtilSql {
 		
 		return sb.toString();
 	}
-
-	private Object getNomeTabela(Object o) {
+	
+	private Object getNomeTabela2(Object o) {
+		if (o.getClass().isAnnotationPresent(Tabela.class)) {
+			Tabela tab = o.getClass().getAnnotation(Tabela.class);
+			
+			if (!tab.value().equals("_notset"))
+				return tab.value();
+		}
+		
 		Class<?> cl = o.getClass();
 		return cl.getSimpleName().toUpperCase();
+	}	
+
+	private Object getNomeTabela(Object o) {
+		if (o.getClass().isAnnotationPresent(Tabela.class)) {
+			Tabela tab = o.getClass().getAnnotation(Tabela.class);
+			
+			if (tab.value().equals("_notset")) {
+				Class<?> cl = o.getClass();
+				return cl.getSimpleName().toUpperCase();				
+			} else {
+				return tab.value();
+			}
+		} else {
+			Class<?> cl = o.getClass();
+			return cl.getSimpleName().toUpperCase();
+		}
 	}
 
 	private Object getAtributos(Object o) {
